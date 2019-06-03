@@ -17,7 +17,7 @@ attr_accessor :name, :grade, :id
     CREATE TABLE IF NOT EXISTS students (
       id INTEGER PRIMARY KEY,
       name TEXT,
-      grade NUMBER
+      grade TEXT
     )
     SQL
 
