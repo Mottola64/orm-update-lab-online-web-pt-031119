@@ -39,7 +39,7 @@ attr_reader :id
     SQL
 
     DB[:conn].execute(sql, self.name, self.grade)
-    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
+    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][1]
   end
 
   def self.create(name:, grade:)
@@ -65,5 +65,5 @@ attr_reader :id
     student.grade = row[2]
     student
   end
-  
+
 end
