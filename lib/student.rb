@@ -34,4 +34,5 @@ attr_reader :id
 
   def save
     sql =
+  end
 end
