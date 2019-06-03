@@ -51,6 +51,13 @@ attr_accessor :name, :grade, :id
     student.save
   end
 
+  def self.new_from_db(row)
+    id = row[0]
+    name = row[1]
+    grade = row[2]
+    self.new(id, name, grade)
+  end
+
   def self.find_by_name(name)
     sql = <<-SQL
     SELECT *
@@ -61,13 +68,6 @@ attr_accessor :name, :grade, :id
     DB[:conn].execute(sql, name).map do |row|
       self.new_from_db(row)
     end.first
-  end
-
-  def self.new_from_db(row)
-    id = row[0]
-    name = row[1]
-    grade = row[2]
-    self.new(id, name, grade)
   end
 
   def update
