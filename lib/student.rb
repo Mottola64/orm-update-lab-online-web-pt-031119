@@ -34,13 +34,17 @@ attr_reader :id
   end
 
   def save
-    sql = <<-SQL
-      INSERT INTO students (name, grade)
-      VALUES (?, ?)
-    SQL
+    if self.id
+      self.update
+    else
+      sql = <<-SQL
+        INSERT INTO students (name, grade)
+        VALUES (?, ?)
+      SQL
 
-    DB[:conn].execute(sql, self.name, self.grade)
-    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
+      DB[:conn].execute(sql, self.name, self.grade)
+      @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
+    end
   end
 
   def self.create(name, grade)
@@ -60,11 +64,10 @@ attr_reader :id
   end
 
   def self.new_from_db(row)
-    student = Student.new
-    student.id = row[0]
-    student.name = row[1]
-    student.grade = row[2]
-    student
+    id = row[0]
+    name = row[1]
+    grade = row[2]
+    self.new(id, name, grade)
   end
 
 end
